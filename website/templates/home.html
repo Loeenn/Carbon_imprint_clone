@@ -1,0 +1,247 @@
+<!--{% block title %}Home{% endblock %}-->
+{% block content%}
+<style>
+        p.block{
+      margin:0;
+      padding:0 0 4px 0;
+      }
+      </style>
+<head>
+  <meta charset="utf-8">
+  <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+</head>
+
+<body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <big>Расчет углеродного следа грузовых перевозок</big>
+      <br /> <br />
+      <small>введите данные о ммаршруте перевозки и параметрах груза, чтобы рассчитать предварительную стоимость заказа</small>
+      <br /><br />
+      <small>по возникшим вопросам вы можете обратиться в службу поддержки:</small>
+      <br />
+      <i class="far fa-phone-alt"></i>
+      <a class="text-nowrap" href="tel:+74956331625">+7 495 633-16-25</a>
+    </div>
+    <div class="col-9">
+      <div align="center">
+  <form method="POST">
+    <br />
+    <big><b>Маршрут перевозки</b></big>
+    <div class="container">
+  <div class="row">
+    <div class="col-sm">
+      Откуда
+    </div>
+     <div class="col-sm">
+       Куда
+     </div>
+    </div>
+  <div class="row">
+    <div class="col-sm">
+    <input
+        type="text"
+        class="form-control"
+        id="routefrom"
+        name="routefrom"
+        placeholder="название станции"
+      />
+      </div>
+    <div class="col-sm">
+    <input
+        type="text"
+        class="form-control"
+        id="routeto"
+        name="routeto"
+        placeholder="название станции"
+      />
+    </div>
+     </div>
+      <p class="block">
+      <div class="row">
+    <div class="col-sm">
+       <input
+        type="text"
+        class="form-control"
+        id="route1"
+        name="route1"
+        placeholder="От станции до адреса"
+      />
+    </div>
+     <div class="col-sm">
+       <input
+        type="text"
+        class="form-control"
+        id="route2"
+        name="route2"
+        placeholder="От станции до станции"
+      />
+     </div>
+        <div class="col-sm">
+          <input
+        type="text"
+        class="form-control"
+        id="route3"
+        name="route3"
+        placeholder="От адреса до станции"
+      />
+     </div>
+        <div class="col-sm">
+          <input
+        type="text"
+        class="form-control"
+        id="route4"
+        name="route4"
+        placeholder="От адреса до адреса"
+      />
+     </div>
+    </div>
+      </div>
+    <p class="block">
+    <big><b>Параметры перевозки</b></big>
+    <p class="block">
+    <div class="container">
+    <div class="row">
+    <div class="col-7">
+
+    <p class="block">
+      <input
+        type="text"
+        class="form-control"
+        id="cargoname"
+        name="cargoname"
+        placeholder="Наименование груза"
+      />
+    <p class="block">
+    <input
+        type="text"
+        class="form-control"
+        id="cargowight"
+        name="cargowight"
+        placeholder="Вес груза"
+      />
+    <p class="block">
+    <input
+        type="text"
+        class="form-control"
+        id="cargovoluume"
+        name="cargovoluume"
+        placeholder="Объем груза"
+      />
+    </div>
+     <div class="col-sm">
+     </div>
+    </div>
+  <div class="row">
+    <div class="col-sm">
+    </div>
+     <div align="right" class="col-sm">
+       <button type="submit" class="btn btn-primary" name="submit_button" value="submit1">Расчитать</button>
+     </div>
+    </div>
+      </div>
+      <big><b>Технология перевозки</b></big>
+  <p class="block">
+  <div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <big>Маршрут авто</big>
+    </div>
+     <div class="col-8">
+       <input
+        type="text"
+        class="form-control"
+        id="cargorouteauto"
+        name="cargorouteauto"
+        placeholder="Адрес отправления – адрес назначения"
+      />
+     </div>
+    </div>
+      </div>
+  <p class="block">
+  <div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <big>Маршрут жд</big>
+    </div>
+     <div class="col-8">
+       <input
+        type="text"
+        class="form-control"
+        id="cargorouterw"
+        name="cargorouterw"
+        placeholder="Станция отправления – станция назначения"
+      />
+     </div>
+    </div>
+      </div>
+  <p class="block">
+  <div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <big>Углеродный след авто</big>
+    </div>
+     <div class="col-8">
+       <input
+        type="text"
+        class="form-control"
+        id="co2_1"
+        name="co2_1"
+        placeholder="СО2 в килограммах"
+      />
+     </div>
+    </div>
+      </div>
+  <p class="block">
+  <div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <big>Углеродный след жд</big>
+    </div>
+     <div class="col-8">
+        <input
+        type="text"
+        class="form-control"
+        id="co2_2"
+        name="co2_2"
+        placeholder="СО2 в килограммах"
+      />
+     </div>
+    </div>
+      </div>
+  <br />
+  <div class="container">
+  <div class="row">
+    <div class="col-sm">
+    </div>
+     <div align="right" class="col-sm">
+       <button type="submit" class="btn btn-primary" name="submit_button" value="submit1">Перевести</button>
+     </div>
+      </div>
+    </div>
+    <br />
+    <br />
+  </form>
+  </div>
+  {%if result%}
+  <h2 align="center">Результат</h2>
+
+    <p align="center" name="output_1" id="output_1" class="form-control">{{result}}</p>
+{%endif%}
+    </div>
+  </div>
+</div>
+</body>
+{% endblock %}
