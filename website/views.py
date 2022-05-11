@@ -4,14 +4,12 @@ import BACKEND
 views = Blueprint('views', __name__)
 
 
-
-
 def calculate(cargowight, cargovoluume):
     if "" in (cargowight, cargovoluume):
         result = None
         flash('No routefrom', category='error')
     else:
-        result = BACKEND.brutto(cargowight, cargovoluume)
+        result = BACKEND
         flash('Done!', category='success')
     return result
 
