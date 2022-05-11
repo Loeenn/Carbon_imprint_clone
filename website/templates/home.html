@@ -194,33 +194,11 @@
       <big>Углеродный след авто</big>
     </div>
      <div class="col-8">
-       <input
-        type="text"
-        class="form-control"
-        id="co2_1"
-        name="co2_1"
-        placeholder="СО2 в килограммах"
-      />
+       {{truck_result}}
      </div>
     </div>
       </div>
   <p class="block">
-  <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      <big>Углеродный след жд</big>
-    </div>
-     <div class="col-8">
-        <input
-        type="text"
-        class="form-control"
-        id="co2_2"
-        name="co2_2"
-        placeholder="СО2 в килограммах"
-      />
-     </div>
-    </div>
-      </div>
   <br />
   <div class="container">
   <div class="row">
@@ -238,7 +216,7 @@
   {%if result%}
   <h2 align="center">Результат</h2>
 
-    <p align="center" name="output_1" id="output_1" class="form-control">{{result}}</p>
+    <p align="center" name="output_1" id="output_1" class="form-control">{{result}} тонн углекислого газа</p>
 {%endif%}
     </div>
   </div>

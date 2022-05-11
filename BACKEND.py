@@ -16,8 +16,9 @@ def connect_db():
 def brutto(m, volume):
     m = float(m)
     volume = float(volume)
-    quantity_cars = max(math.ceil(volume/120), math.ceil(m/69000))
-    return quantity_cars * 23000 + m
+    quantity_cars = max(math.ceil(volume/120), math.ceil(m/69))
+    print(quantity_cars * 23 + m)
+    return quantity_cars * 23 + m
 
 
 def insert_table(filename: str):
@@ -38,7 +39,7 @@ def insert_table(filename: str):
     cursor.commit()
 
 
-def get_route_norm(start_station: str, end_station: str, brutto) -> list[float, float]:
+def get_route_norm(start_station: str, end_station: str, brutto: float) -> list[float, float]:
     fuel = [0, 0]
     cursor = connect_db()
     cursor.execute('''
@@ -57,14 +58,16 @@ def get_route_norm(start_station: str, end_station: str, brutto) -> list[float, 
             from Section_norms
             where Section = ?
         ''', section)
-        fuel = cursor.fetchone()
-        fuel[0] += norm[0]*(brutto/10)
-        fuel[1] += norm[1]*(brutto/10)
+        norms = cursor.fetchone()
+        print(norms)
+        fuel[0] += norms[0]*(brutto/10)
+        fuel[1] += norms[1]*(brutto/10)
+    print(fuel)
     return fuel
 
 
 def oxygen_imprint(fuel: list) -> float:
-    return fuel[0]*1.7405 + fuel[1]*2.172  # тонны углеродного следа
+    return round(fuel[0]*1.7405 + fuel[1]*2.172)  # тонны углеродного следа
 
 
 def translate(string: str) -> str:
@@ -82,6 +85,7 @@ def translate(string: str) -> str:
 
 
 def translate_routs() -> None:
+    cursor = connect_db()
     for i in cursor.fetchall():
         cursor.execute('''
             update Routs
