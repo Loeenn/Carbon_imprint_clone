@@ -16,15 +16,12 @@ def calculate(cargo_weight, cargo_volume, start_station, end_station):
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
-    result = None
     if request.method == 'POST':
         if request.form['submit_button'] == 'submit1':
             result = calculate(request.form.get('cargowight'), request.form.get('cargovoluume'),
                                request.form.get('routefrom'), request.form.get('routeto'))
             return render_template("home.html", result=result)
         elif request.form['submit_button'] == 'submit2':
-            return render_template("home.html", result=None)
-        else:
-            return render_template("home.html", result=None)
+            return render_template("home.html")
     else:
-        return render_template("home.html", result=None)
+        return render_template("home.html")

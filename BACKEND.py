@@ -67,7 +67,7 @@ def get_route_norm(start_station: str, end_station: str, brutto: float) -> list[
 
 
 def oxygen_imprint(fuel: list) -> float:
-    return round(fuel[0]*1.7405 + fuel[1]*2.172)  # тонны углеродного следа
+    return round(fuel[0]*1.7405*0.6425 + fuel[1]*2.172)  # тонны углеродного следа
 
 
 def translate(string: str) -> str:
