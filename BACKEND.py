@@ -67,21 +67,21 @@ def get_route_norm(start_station: str, end_station: str, brutto: float) -> list[
 
 
 def oxygen_imprint(fuel: list) -> float:
-    return round(fuel[0]*1.7405*0.6425 + fuel[1]*2.172)  # тонны углеродного следа
+    return round(fuel[0]*(3.581/4)*0.18 + fuel[0]*(1.603/10)*0.46 + fuel[1]*2.172)  # тонны углеродного следа
 
 
 def translate(string: str) -> str:
     translator = {65: 1040, 66: 1042, 67: 1057, 69: 1045, 78: 1048, 75: 1050, 77: 1052, 72: 1053, 79: 1054, 80: 1056, 84: 1058, 88: 1061}
-    string_new = ''
+    translated = ''
 
     for i in range(len(string)):
         print(string[i], ord(string[i]))
         if ord(string[i]) not in range(1040, 1072) and ord(string[i]) not in (44, 45, 41, 40, 32, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 95, 46):
-            string_new += chr(translator[ord(string[i])])
+            translated += chr(translator[ord(string[i])])
         else:
-            string_new += string[i]
+            translated += string[i]
 
-    return string_new
+    return translated
 
 
 def translate_routs() -> None:
