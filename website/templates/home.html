@@ -14,11 +14,12 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-    <link
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='mystyle.css') }}"/>
+    <!-- <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
-    />
+    /> -->
 </head>
 
 <body>
@@ -213,11 +214,11 @@
     <br />
   </form>
   </div>
-  {%if result%}
-  <h2 align="center">Результат</h2>
-
-    <p align="center" name="output_1" id="output_1" class="form-control">{{result}} тонн углекислого газа</p>
-{%endif%}
+    {%if result%}
+          <h2 align="center">Результат</h2>
+          <div class="pie" align="center" style="--p:{{pie_procent}};--c:lightgreen"> {{pie_procent}} %</div>
+          <p align="center" name="output_1" id="output_1" class="form-control">{{result}} тонн углекислого газа</p>
+    {%endif%}
     </div>
   </div>
 </div>
