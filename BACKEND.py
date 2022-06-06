@@ -1,6 +1,8 @@
 import math
 import pyodbc
 from xlrd import open_workbook
+import openrouteservice as ors
+from geopy import Nominatim
 
 
 def connect_db():
@@ -70,6 +72,16 @@ def get_route_norm(start_station: str, end_station: str, km_tons: float) -> list
     return fuel
 
 
+def truck_imprint():
+    ors_key = '5b3ce3597851110001cf6248c07606351b6749d5a4de08dd46d57af2'
+    client = ors.Client(key=ors_key)
+    geolocator = Nominatim(user_agent="myApp")
+
+    location = geolocator.geocode('Хани жд')
+
+    print(f'{location.longitude}, {location.latitude}')
+
+
 def oxygen_imprint(fuel: list) -> float:
     return round(fuel[0]*(3.581/4)*0.18 + fuel[0]*(1.603/10)*0.46 + fuel[1]*2.172)  # тонны углеродного следа
 
@@ -113,3 +125,17 @@ def translate_routs() -> None:
 #             where Section = ?
 #         ''', translate(item[0]), item[0])
 #     cursor.commit()
+
+
+def get_stations():
+    cursor = connect_db()
+    cursor.execute('''
+        select Start_station
+        from Section_norms
+    ''')
+    stations = list(dict.fromkeys([s[0] for s in cursor.fetchall()]))
+    return stations
+
+
+if __name__ == '__main__':
+    truck_imprint()

@@ -18,7 +18,7 @@ def calculate(cargo_weight, cargo_volume, start_station, end_station):
 def home():
     if request.method == 'POST':
         if request.form['submit_button'] == 'submit1':
-            result, truck_result, pie_procent = *calculate(request.form.get('cargowight'), request.form.get('cargovoluume'),
+            result = calculate(request.form.get('cargowight'), request.form.get('cargovoluume'),
                                request.form.get('routefrom'), request.form.get('routeto'))
             return render_template("home.html", result=result, pie_procent=pie_procent, truck_result=truck_result)
         elif request.form['submit_button'] == 'submit2':
