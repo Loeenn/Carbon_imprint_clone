@@ -71,44 +71,6 @@
     </div>
      </div>
       <p class="block">
-      <div class="row">
-    <div class="col-sm">
-       <input
-        type="text"
-        class="form-control"
-        id="route1"
-        name="route1"
-        placeholder="От станции до адреса"
-      />
-    </div>
-     <div class="col-sm">
-       <input
-        type="text"
-        class="form-control"
-        id="route2"
-        name="route2"
-        placeholder="От станции до станции"
-      />
-     </div>
-        <div class="col-sm">
-          <input
-        type="text"
-        class="form-control"
-        id="route3"
-        name="route3"
-        placeholder="От адреса до станции"
-      />
-     </div>
-        <div class="col-sm">
-          <input
-        type="text"
-        class="form-control"
-        id="route4"
-        name="route4"
-        placeholder="От адреса до адреса"
-      />
-     </div>
-    </div>
       </div>
     <p class="block">
     <big><b>Параметры перевозки</b></big>
@@ -153,69 +115,15 @@
      </div>
     </div>
       </div>
-      <big><b>Технология перевозки</b></big>
-  <p class="block">
-  <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      <big>Маршрут авто</big>
-    </div>
-     <div class="col-8">
-       <input
-        type="text"
-        class="form-control"
-        id="cargorouteauto"
-        name="cargorouteauto"
-        placeholder="Адрес отправления – адрес назначения"
-      />
-     </div>
-    </div>
-      </div>
-  <p class="block">
-  <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      <big>Маршрут жд</big>
-    </div>
-     <div class="col-8">
-       <input
-        type="text"
-        class="form-control"
-        id="cargorouterw"
-        name="cargorouterw"
-        placeholder="Станция отправления – станция назначения"
-      />
-     </div>
-    </div>
-      </div>
-  <p class="block">
-  <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      <big>Углеродный след авто</big>
-    </div>
-     <div class="col-8">
-       {{truck_result}}
-     </div>
-    </div>
-      </div>
-  <p class="block">
-  <br />
-  <div class="container">
-  <div class="row">
-    <div class="col-sm">
-    </div>
-     <div align="right" class="col-sm">
-       <button type="submit" class="btn btn-primary" name="submit_button" value="submit1">Перевести</button>
-     </div>
-      </div>
-    </div>
     <br />
     <br />
   </form>
   </div>
     {%if result%}
           <h2 align="center">Результат</h2>
+
+            <big>Углеродный след авто</big>
+              {{truck_result}}
           <div class="pie" align="center" style="--p:{{pie_procent}};--c:lightgreen"> {{pie_procent}} %</div>
           <p align="center" name="output_1" id="output_1" class="form-control">{{result}} тонн углекислого газа</p>
     {%endif%}
