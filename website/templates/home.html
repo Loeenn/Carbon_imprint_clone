@@ -121,11 +121,11 @@
   </div>
     {%if result%}
           <h2 align="center">Результат</h2>
-
             <big>Углеродный след авто</big>
-              {{truck_result}}
+              <p class="form-control" align="center">{{truck_result}} тонн углекислого газа</p>
           <div class="pie" align="center" style="--p:{{pie_procent}};--c:lightgreen"> {{pie_procent}} %</div>
-          <p align="center" name="output_1" id="output_1" class="form-control">{{result}} тонн углекислого газа</p>
+          <big>Углеродный след Ж/Д</big>
+          <p align="center"  name="output_1" id="output_1">{{result}} тонн углекислого газа</p>
     {%endif%}
     </div>
   </div>
