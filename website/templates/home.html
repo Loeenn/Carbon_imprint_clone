@@ -52,22 +52,18 @@
     </div>
   <div class="row">
     <div class="col-sm">
-    <input
-        type="text"
-        class="form-control"
-        id="routefrom"
-        name="routefrom"
-        placeholder="название станции"
-      />
+      <select class="form-control" name="routefrom">
+        {% for case in stations%}
+        <option>{{case}}</option>
+        {% endfor %}
+      </select>
       </div>
     <div class="col-sm">
-    <input
-        type="text"
-        class="form-control"
-        id="routeto"
-        name="routeto"
-        placeholder="название станции"
-      />
+      <select class="form-control" name="routeto">
+        {% for case in stations%}
+        <option>{{case}}</option>
+        {% endfor %}
+      </select>
     </div>
      </div>
       <p class="block">
@@ -94,6 +90,7 @@
         id="cargowight"
         name="cargowight"
         placeholder="Вес груза"
+        type="number"
       />
     <p class="block">
     <input
@@ -102,6 +99,7 @@
         id="cargovoluume"
         name="cargovoluume"
         placeholder="Объем груза"
+        type="number"
       />
     </div>
      <div class="col-sm">
