@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, jsonify
-from BACKEND import get_route_norm, oxygen_imprint, brutto
+from BACKEND import get_route_norm, oxygen_imprint, brutto, get_stations
 
 views = Blueprint('views', __name__)
 
@@ -22,8 +22,11 @@ def home():
                                request.form.get('routefrom'), request.form.get('routeto'))
             pie_percent = 45
             truck_result = None
-            return render_template("home.html", result=result, pie_procent=pie_percent, truck_result=truck_result)
+            stations = get_stations()
+            return render_template("home.html", result=result, pie_procent=pie_percent, truck_result=truck_result,
+                                   stations=stations)
         elif request.form['submit_button'] == 'submit2':
             return render_template("home.html")
     else:
-        return render_template("home.html")
+        stations = get_stations()
+        return render_template("home.html", stations=stations)
