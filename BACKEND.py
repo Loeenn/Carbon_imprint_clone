@@ -2,6 +2,8 @@ import math
 import pyodbc
 from xlrd import open_workbook
 import openrouteservice as ors
+from openrouteservice.directions import directions
+from openrouteservice.elevation import elevation_line
 from geopy import Nominatim
 
 
@@ -72,14 +74,18 @@ def get_route_norm(start_station: str, end_station: str, km_tons: float) -> list
     return fuel
 
 
-def truck_imprint():
+def truck_imprint(start_point, end_point):
     ors_key = '5b3ce3597851110001cf6248c07606351b6749d5a4de08dd46d57af2'
     client = ors.Client(key=ors_key)
     geolocator = Nominatim(user_agent="myApp")
 
-    location = geolocator.geocode('Хани жд')
+    start_location = geolocator.geocode(f'Железнодорожная станция {start_point}')
+    end_location = geolocator.geocode(f'Железнодорожная станция {end_point}')
 
-    print(f'{location.longitude}, {location.latitude}')
+    routes = directions(client, ((start_location.longitude, start_location.latitude),
+                                 (end_location.longitude, end_location.latitude)), profile='driving-car', elevation=True)
+    elevation = elevation_line(client, format_in='encodedpolyline', geometry=routes['routes'][0]['geometry'])
+    print(elevation)
 
 
 def oxygen_imprint(fuel: list) -> float:
@@ -138,4 +144,4 @@ def get_stations():
 
 
 if __name__ == '__main__':
-    truck_imprint()
+    truck_imprint('Ангасолка', 'Зима')

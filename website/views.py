@@ -20,7 +20,9 @@ def home():
         if request.form['submit_button'] == 'submit1':
             result = calculate(request.form.get('cargowight'), request.form.get('cargovoluume'),
                                request.form.get('routefrom'), request.form.get('routeto'))
-            return render_template("home.html", result=result, pie_procent=pie_procent, truck_result=truck_result)
+            pie_percent = 45
+            truck_result = None
+            return render_template("home.html", result=result, pie_procent=pie_percent, truck_result=truck_result)
         elif request.form['submit_button'] == 'submit2':
             return render_template("home.html")
     else:
