@@ -3,7 +3,7 @@ import pyodbc
 from xlrd import open_workbook
 import openrouteservice as ors
 from openrouteservice.directions import directions
-from openrouteservice.elevation import elevation_line
+from openrouteservice.elevation import elevation_point
 from geopy import Nominatim
 
 
@@ -19,7 +19,7 @@ def connect_db():
 
 
 def brutto(m, volume):
-    m = float(m)
+    m = m
     volume = float(volume)
     quantity_cars = max(math.ceil(volume/120), math.ceil(m/69))
     print(quantity_cars * 23 + m)
@@ -59,6 +59,8 @@ def get_route_norm(start_station: str, end_station: str, km_tons: float) -> list
 
     stations = cursor.fetchone()[0].split(', ')
 
+    length = 0
+
     for i in range(1, len(stations)):
         cursor.execute('''
             SELECT Electronic, Diesel, Length
@@ -68,13 +70,14 @@ def get_route_norm(start_station: str, end_station: str, km_tons: float) -> list
         ''', stations[i - 1], stations[i])
         norms = cursor.fetchone()
         print(norms)
-        fuel[0] += norms[0]*((km_tons * norms[2])/100)
-        fuel[1] += norms[1]*((km_tons * norms[2])/100)
+        fuel[0] += norms[0]*((km_tons * norms[2])/10000)
+        fuel[1] += norms[1]*((km_tons * norms[2])/10000)
+        length += norms[2]
     print(fuel)
-    return fuel
+    return [fuel, length]
 
 
-def truck_imprint(start_point, end_point):
+def truck_imprint(start_point, end_point, length, weight):
     ors_key = '5b3ce3597851110001cf6248c07606351b6749d5a4de08dd46d57af2'
     client = ors.Client(key=ors_key)
     geolocator = Nominatim(user_agent="myApp")
@@ -84,8 +87,10 @@ def truck_imprint(start_point, end_point):
 
     routes = directions(client, ((start_location.longitude, start_location.latitude),
                                  (end_location.longitude, end_location.latitude)), profile='driving-car', elevation=True)
-    elevation = elevation_line(client, format_in='encodedpolyline', geometry=routes['routes'][0]['geometry'])
-    print(elevation)
+    elevation_perc = routes['routes'][0]['summary']['ascent']/routes['routes'][0]['summary']['descent']*1000
+
+    imprint = weight/20*40*elevation_perc*(length/100)/1000*2.172
+    return imprint
 
 
 def oxygen_imprint(fuel: list) -> float:
