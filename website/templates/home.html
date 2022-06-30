@@ -25,107 +25,119 @@
 <body>
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      <big>Расчет углеродного следа грузовых перевозок</big>
-      <br /> <br />
-      <small>введите данные о ммаршруте перевозки и параметрах груза, чтобы рассчитать предварительную стоимость заказа</small>
-      <br /><br />
-      <small>по возникшим вопросам вы можете обратиться в службу поддержки:</small>
-      <br />
-      <i class="far fa-phone-alt"></i>
-      <a class="text-nowrap" href="tel:+74956331625">+7 495 633-16-25</a>
-    </div>
-    <div class="col-9">
-      <div align="center">
-  <form method="POST">
-    <br />
-    <big><b>Маршрут перевозки</b></big>
-    <div class="container">
-  <div class="row">
-    <div class="col-sm">
-      Откуда
-    </div>
-     <div class="col-sm">
-       Куда
-     </div>
-    </div>
-  <div class="row">
-    <div class="col-sm">
-      <select class="form-control" name="routefrom">
-        {% for case in stations%}
-        <option>{{case}}</option>
-        {% endfor %}
-      </select>
-      </div>
-    <div class="col-sm">
-      <select class="form-control" name="routeto">
-        {% for case in stations%}
-        <option>{{case}}</option>
-        {% endfor %}
-      </select>
-    </div>
-     </div>
-      <p class="block">
-      </div>
-    <p class="block">
-    <big><b>Параметры перевозки</b></big>
-    <p class="block">
-    <div class="container">
     <div class="row">
-    <div class="col-7">
-
-    <p class="block">
-      <input
-        type="text"
-        class="form-control"
-        id="cargoname"
-        name="cargoname"
-        placeholder="Наименование груза"
-      />
-    <p class="block">
-    <input
-        class="form-control"
-        id="cargowight"
-        name="cargowight"
-        placeholder="Вес груза"
-        type="number"
-      />
-    <p class="block">
-    <input
-        class="form-control"
-        id="cargovoluume"
-        name="cargovoluume"
-        placeholder="Объем груза"
-        type="number"
-      />
-    </div>
-     <div class="col-sm">
-     </div>
-    </div>
-  <div class="row">
-    <div class="col-sm">
-    </div>
-     <div align="right" class="col-sm">
-       <button type="submit" class="btn btn-primary" name="submit_button" value="submit1">Расчитать</button>
-     </div>
-    </div>
+          <div class="col-sm">
+            <big>Расчет углеродного следа грузовых перевозок</big>
+            <br /> <br />
+            <small>введите данные о ммаршруте перевозки и параметрах груза, чтобы рассчитать предварительную стоимость заказа</small>
+            <br /><br />
+            <small>по возникшим вопросам вы можете обратиться в службу поддержки:</small>
+            <br />
+            <i class="far fa-phone-alt"></i>
+            <a class="text-nowrap" href="tel:+74956331625">+7 495 633-16-25</a>
+          </div>
+          <div class="col-9">
+              <div align="center">
+                    <form method="POST">
+                        <br />
+                        <big><b>Маршрут перевозки</b></big>
+                        <div class="container">
+                            <div class="row">
+                                  <div class="col-sm">
+                                      Откуда
+                                  </div>
+                                  <div class="col-sm">
+                                      Куда
+                                  </div>
+                            </div>
+                            <div class="row">
+                                  <div class="col-sm">
+                                      <select class="form-control" name="routefrom">
+                                            {% for case in stations%}
+                                                <option>{{case}}</option>
+                                            {% endfor %}
+                                      </select>
+                                  </div>
+                                  <div class="col-sm">
+                                      <select class="form-control" name="routeto">
+                                          {% for case in stations%}
+                                                <option>{{case}}</option>
+                                          {% endfor %}
+                                      </select>
+                                  </div>
+                            </div>
+                            <p class="block">
+                        </div>
+                        <p class="block">
+                        <big><b>Параметры перевозки</b></big>
+                        <p class="block">
+                        <div class="container">
+                            <div class="row">
+                                  <div class="col-7">
+                                        <p class="block">
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          id="cargoname"
+                                          name="cargoname"
+                                          placeholder="Наименование груза"
+                                        />
+                                        <p class="block">
+                                        <input
+                                            class="form-control"
+                                            id="cargowight"
+                                            name="cargowight"
+                                            placeholder="Вес груза"
+                                            type="number"
+                                        />
+                                        <p class="block">
+                                        <input
+                                            class="form-control"
+                                            id="cargovoluume"
+                                            name="cargovoluume"
+                                            placeholder="Объем груза"
+                                            type="number"
+                                         />
+                                    </div>
+                                    <div class="col-sm">
+                                            <select class="form-control" name="cargoType" placeholder="тип груза">
+                                                {% for case in stations%}
+                                                      <option>{{case}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="form-control" name="pacageType" placeholder="тип упаковки">
+                                                {% for case in stations%}
+                                                      <option>{{case}}</option>
+                                                {% endfor %}
+                                            </select>
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-sm">
+                                    </div>
+                                    <div align="right" class="col-sm">
+                                          <button type="submit" class="btn btn-primary" name="submit_button" value="submit1">Расчитать</button>
+                                    </div>
+                              </div>
+                        </div>
+                        <br />
+                        <br />
+                  </form>
+              </div>
+              {%if result%}
+                    <div align="center">
+                          <h2 >Результат</h2>
+                            <p font=30px>тонн углекислого газа</p>
+                            <big>авто</big>
+                              <p >{{truck_result}}</p>
+                          <div class="pie"  style="--p:{{pie_procent}};--c:lightgreen"> {{pie_procent}} %</div>
+                          <br/>
+                          <p   name="output_1" id="output_1">{{result}}</p>
+                          <big>Ж/Д</big>
+                    </div>
+              {%endif%}
+          </div>
       </div>
-    <br />
-    <br />
-  </form>
-  </div>
-    {%if result%}
-          <h2 align="center">Результат</h2>
-            <big>Углеродный след авто</big>
-              <p class="form-control" align="center">{{truck_result}} тонн углекислого газа</p>
-          <div class="pie" align="center" style="--p:{{pie_procent}};--c:lightgreen"> {{pie_procent}} %</div>
-          <br/>
-          <big>Углеродный след Ж/Д</big>
-          <p class="form-control" align="center"  name="output_1" id="output_1">{{result}} тонн углекислого газа</p>
-    {%endif%}
-    </div>
-  </div>
 </div>
 </body>
 {% endblock %}
