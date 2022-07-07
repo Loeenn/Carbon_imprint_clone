@@ -42,26 +42,28 @@
                         <br />
                         <big><b>Маршрут перевозки</b></big>
                         <div class="container">
+<!--                            <div class="row">-->
+<!--                                  <div class="col-sm">-->
+<!--                                      Откуда-->
+<!--                                  </div>-->
+<!--                                  <div class="col-sm">-->
+<!--                                      Куда-->
+<!--                                  </div>-->
+<!--                            </div>-->
                             <div class="row">
                                   <div class="col-sm">
-                                      Откуда
-                                  </div>
-                                  <div class="col-sm">
-                                      Куда
-                                  </div>
-                            </div>
-                            <div class="row">
-                                  <div class="col-sm">
+                                      <p style="margin-bottom:5px">Откуда</p>
                                       <select class="form-control" name="routefrom">
                                             {% for case in stations%}
-                                                <option>{{case}}</option>
+                                                <option {{ 'selected' if case=="Ангасолка" else "" }}>{{case}}</option>
                                             {% endfor %}
                                       </select>
                                   </div>
                                   <div class="col-sm">
+                                      <p style="margin-bottom:5px">Куда</p>
                                       <select class="form-control" name="routeto">
                                           {% for case in stations%}
-                                                <option>{{case}}</option>
+                                                <option {{ 'selected' if case=="Зима" else "" }}>{{case}}</option>
                                           {% endfor %}
                                       </select>
                                   </div>
@@ -74,48 +76,61 @@
                         <div class="container">
                             <div class="row">
                                   <div class="col-7">
+                                        <p style="margin-bottom:5px">Тип груза</p>
+                                        <select class="form-control"  name="cargoType" placeholder="тип груза">
+                                            {% for case in typeCargo %}
+                                                  <option>{{case}}</option>
+                                            {% endfor %}
+                                        </select>
+<!--                                        <input-->
+<!--                                          type="text"-->
+<!--                                          class="form-control"-->
+<!--                                          id="cargoname"-->
+<!--                                          name="cargoname"-->
+<!--                                          placeholder="Наименование груза"-->
+<!--                                        />-->
                                         <p class="block">
+
+<!--                                        <p class="block">-->
+
+                                    </div>
+                                    <div class="col-sm">
+                                            <p style="margin-bottom:5px">Тип упаковки</p>
+                                            <select class="form-control" name="pacageType" placeholder="тип упаковки">
+                                                {% for case in typePackage %}
+                                                      <option>{{case}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <p class="block">
+                                    </div>
+                              </div>
+                              <div class="row">
+                                    <div class="col-7">
                                         <input
-                                          type="text"
-                                          class="form-control"
-                                          id="cargoname"
-                                          name="cargoname"
-                                          placeholder="Наименование груза"
-                                        />
-                                        <p class="block">
-                                        <input
+                                            style="margin-top:15px"
                                             class="form-control"
                                             id="cargowight"
                                             name="cargowight"
                                             placeholder="Вес груза"
                                             type="number"
                                         />
-                                        <p class="block">
-                                        <input
-                                            class="form-control"
-                                            id="cargovoluume"
-                                            name="cargovoluume"
-                                            placeholder="Объем груза"
-                                            type="number"
-                                         />
                                     </div>
                                     <div class="col-sm">
-                                            <select class="form-control" name="cargoType" placeholder="тип груза">
-                                                {% for case in stations%}
-                                                      <option>{{case}}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <select class="form-control" name="pacageType" placeholder="тип упаковки">
-                                                {% for case in stations%}
-                                                      <option>{{case}}</option>
-                                                {% endfor %}
-                                            </select>
+                                            <input
+                                                style="margin-top:15px"
+                                                class="form-control"
+                                                id="cargovoluume"
+                                                name="cargovoluume"
+                                                placeholder="Объем груза"
+                                                type="number"
+                                             />
+
                                     </div>
                               </div>
                               <div class="row">
                                     <div class="col-sm">
                                     </div>
-                                    <div align="right" class="col-sm">
+                                    <div align="right" style="margin-top:15px" class="col-sm">
                                           <button type="submit" class="btn btn-primary" name="submit_button" value="submit1">Расчитать</button>
                                     </div>
                               </div>
@@ -126,14 +141,16 @@
               </div>
               {%if result%}
                     <div align="center">
-                          <h2 >Результат</h2>
+                            <h2 >Результат</h2>
                             <p font=30px>тонн углекислого газа</p>
-                            <big>авто</big>
-                              <p >{{truck_result}}</p>
-                          <div class="pie"  style="--p:{{pie_procent}};--c:lightgreen"> {{pie_procent}} %</div>
-                          <br/>
-                          <p   name="output_1" id="output_1">{{result}}</p>
-                          <big>Ж/Д</big>
+                            <h3 >{{truck_result}}</h3>
+                            <h4>АВТО</h4>
+                    </div>
+                            <div class="pie"  style="--p:{{pie_procent}};--c:lightgreen"> {{pie_procent}} %</div>
+                    <div align="center">
+                            <br/>
+                            <h4>Ж/Д</h4>
+                            <h3   name="output_1" id="output_1">{{result}}</h3>
                     </div>
               {%endif%}
           </div>
