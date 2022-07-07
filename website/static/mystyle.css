@@ -1,4 +1,4 @@
-@property --p{
+/* @property --p{
   syntax: '<number>';
   inherits: true;
   initial-value: 0;
@@ -40,6 +40,20 @@
   transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - 150px));
 }
 
-body {
-  background: RGBA(0,0,0,0);
+*/
+
+.center_class {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
 }
+
+#column-example-13 {
+  height: 200px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+  /* body {
+    background: RGBA(0,0,0,0);
+} */

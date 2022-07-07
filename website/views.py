@@ -42,9 +42,9 @@ def home():
             except ValueError:
                 flash('No routefrom', category='error')
                 return render_template("home.html", stations=stations, typeCargo=typeCargo, typePackage=typePackage)
-            pie_percent = round(result/truck_result*100)
+            bar_percent = 100 * max(result, truck_result) // min(result, truck_result)
             truck_result = round(truck_result)
-            return render_template("home.html", result=result, pie_procent=pie_percent, truck_result=truck_result,
-                                   stations=stations, typeCargo=typeCargo, typePackage=typePackage)
+            return render_template("home.html", result=result, bar_procent=bar_percent, truck_result=truck_result,
+                                   stations=stations, typeCargo=typeCargo, typePackage=typePackage, max_kakay_to_huina=max(truck_result, result) )
     else:
         return render_template("home.html", stations=stations, typeCargo=typeCargo, typePackage=typePackage)

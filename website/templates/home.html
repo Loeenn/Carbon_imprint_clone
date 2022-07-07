@@ -15,6 +15,7 @@
       crossorigin="anonymous"
     />
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='mystyle.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='charts.min.css') }}">
     <!-- <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -139,22 +140,38 @@
                         <br />
                   </form>
               </div>
-              {%if result%}
-                    <div align="center">
-                            <h2 >Результат</h2>
-                            <p font=30px>тонн углекислого газа</p>
-                            <h3 >{{truck_result}}</h3>
-                            <h4>АВТО</h4>
-                    </div>
-                            <div class="pie"  style="--p:{{pie_procent}};--c:lightgreen"> {{pie_procent}} %</div>
-                    <div align="center">
-                            <br/>
-                            <h4>Ж/Д</h4>
-                            <h3   name="output_1" id="output_1">{{result}}</h3>
-                    </div>
-              {%endif%}
           </div>
       </div>
+      {%if result%}
+
+              <div class="row center_class">
+                      <div class="col-sm">
+                            <h2 >Результаты</h2>
+                            <br/>
+                              <p font=30px>тонн углекислого газа</p>
+                              <h4>АВТО</h4>
+                              <h3 >{{truck_result}}</h3>
+                              <br/>
+                              <h4>Ж/Д</h4>
+                              <h3   name="output_1" id="output_1">{{result}}</h3>
+                      </div>
+                      <div class="col-9">
+                                      <table id="column-example-13" class="charts-css column show-labels show-primary-axis show-10-secondary-axes">
+                                            <caption>{{bar_procent}} % различие </caption>
+                                              <tbody>
+                                                  <tr>
+                                                      <th scope="row" > AVTO </th>
+                                                      <td style="--size:{{truck_result / max_kakay_to_huina}}; --color: black;"></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <th scope="row"> RAILWAY </th>
+                                                      <td style="--size:{{result / max_kakay_to_huina}}; --color: green;"></td>
+                                                  </tr>
+                                              </tbody>
+                                        </table>
+                    </div>
+              </div>
+      {%endif%}
 </div>
 </body>
 {% endblock %}
