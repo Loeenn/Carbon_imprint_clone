@@ -5,7 +5,8 @@ import openrouteservice as ors
 from openrouteservice.directions import directions
 from openrouteservice.elevation import elevation_point
 from geopy import Nominatim
-
+import csv
+import geopy.distance
 
 def connect_db():
     server = 'tcp:176.99.158.202'
@@ -148,5 +149,85 @@ def get_stations():
     return stations
 
 
+def put_csv():
+    data = []
+    q = '''
+            INSERT INTO airports(airport_id,
+            ident,
+            name,
+            latitude_deg,
+            longitude_deg,
+            elevation_ft,
+            continent,
+            iso_country,
+            iso_region,
+            municipaly,
+            gps_code,
+            local_code
+            ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)'''
+    cursor = connect_db()
+    cursor.fast_executemany = True
+    with open('airports.csv', encoding='utf-8') as csvfile:
+        spamreader = csv.reader(csvfile)
+        i = 0
+        for row in spamreader:
+            if row[6] != '':
+                if i == 5000:
+                    print('ass')
+                    cursor.executemany(q, data)
+                    cursor.commit()
+                    data = []
+                    i = 0
+                data.append((int(row[0]), row[1], row[3], float(row[4]), float(row[5]), int(row[6]), row[7], row[8],
+                            row[9], row[10], row[12], row[14]))
+                i += 1
+        cursor.executemany(q, data)
+        cursor.commit()
+
+def get_airport_distance(departure_airport,arrival_airport):
+    cursor = connect_db()
+    departure_latitude=float(cursor.execute('''
+    select latitude_deg from airports 
+    where name = ?''',departure_airport).fetchone()[0])
+
+    departure_longitude =float(cursor.execute('''
+    select longitude_deg from airports 
+    where name = ?''',departure_airport).fetchone()[0])
+
+    arrival_latitude = float(cursor.execute('''
+        select latitude_deg from airports 
+        where name = ?''', arrival_airport).fetchone()[0])
+
+    arrival_longitude = float(cursor.execute('''
+        select longitude_deg from airports 
+        where name = ?''', arrival_airport).fetchone()[0])
+
+    coordinates_departure = (departure_latitude,departure_longitude)
+
+    coordinates_arrival = (arrival_latitude,arrival_longitude)
+
+    return geopy.distance.geodesic(coordinates_departure, coordinates_arrival).km
+
+
+def average_airport_imprint(distance):
+    return distance*0.621371*53*0.4535923
+
+
+
+
+def average_air_imprint_by_kg(mass,distance):#масса в тоннах,среднее перевозмиое число берем из расчета того что самый популярный самолет имеет груозоподъёмность 18 тонн
+    return (mass/18)*distance
+
+
+
+
+def get_air_imprint_by_model(model,distance):
+    pass
+
+
+
+
+
 if __name__ == '__main__':
-    truck_imprint('Ангасолка', 'Зима')
+    print(average_airport_imprint(float(get_airport_distance('Bartell Strip','Stallions Airport'))))
+
