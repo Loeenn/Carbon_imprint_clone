@@ -7,6 +7,11 @@ from openrouteservice.elevation import elevation_point
 from geopy import Nominatim
 import csv
 import geopy.distance
+from bs4 import BeautifulSoup as bs
+import requests
+import lxml
+
+
 
 def connect_db():
     server = 'tcp:176.99.158.202'
@@ -213,21 +218,89 @@ def average_airport_imprint(distance):
     return distance*0.621371*53*0.4535923
 
 
-
-
 def average_air_imprint_by_kg(mass,distance):#масса в тоннах,среднее перевозмиое число берем из расчета того что самый популярный самолет имеет груозоподъёмность 18 тонн
     return (mass/18)*distance
-
-
 
 
 def get_air_imprint_by_model(model,distance):
     pass
 
+def parse_airplane(url):
+    r = requests.get(url)
+    soup = bs(r.text, "html.parser")
+    name1 = soup.find('div',class_ = 'col lg_span_8 md_span_8 sm_span_6').find_all("h1")[0].text
+    name = ' '.join(name1.split())
+    value = soup.find('div',class_ = 'promo-item no-print')
+    obiem=int(value.find_all("p")[0].text.split()[0])
+    try:
+        kruiz_speed =int(value.find_all("p")[1].text.split()[0])
+    except:
+        kruiz_speed = 0
+    try:
 
+        zagruzka = int(value.find_all("p")[3].text.split()[0])
+    except:
+        zagruzka = 20000
+    try:
+        razmer_uderzhania =value.find_all("p")[4].text.split()[0].split("x")
+    except:
+        razmer_uderzhania = 0
+    try:
+        razmer_uderzhania_lenght = int(razmer_uderzhania[0])
+    except:
+        razmer_uderzhania_lenght = 0
+    try:
+        razmer_uderzhania_width = int(razmer_uderzhania[1])
+    except:
+        razmer_uderzhania_width = 0
+    try:
+        razmer_uderzhania_height = int(razmer_uderzhania[2])
+    except:
+        razmer_uderzhania_height=0
+    try:
+        razmer_dveri = value.find_all("p")[5].text.split()[0].split("x")
+    except:
+        razmer_dveri=0
+    try:
+        razmer_dveri_width = int(razmer_dveri[0])
+    except:
+        razmer_dveri_width=0
+    try:
+        razmer_dveri_height = int(razmer_dveri[1])
+    except:
+        razmer_dveri_height=0
+    try:
+        ibzhii_obiem_nagruzki = int(value.find_all("p")[6].text.split()[0])
+    except:
+        ibzhii_obiem_nagruzki = 0
+    try:
+        maximum_diapazon = int(value.find_all("p")[7].text.split()[0])
+    except:
+        maximum_diapazon=0
+    return [obiem,kruiz_speed,zagruzka,razmer_uderzhania_lenght,razmer_uderzhania_width,razmer_uderzhania_height,
+            razmer_dveri_width,razmer_dveri_height,ibzhii_obiem_nagruzki,maximum_diapazon,name]
 
+def add_airplane(table):
+    cursor = connect_db()
+    values = parse_airplane('https://www.aircharter.ru'+table)
+    print(values)
+    cursor.execute('''
+    INSERT INTO airplanes (load_volume,cruise_speed,load_weight,holding_length,holding_width,holding_height,door_width,door_height,whole_volume_load,max_range_km,airplane_name)
+    values (?,?,?,?,?,?,?,?,?,?,?)''',[values[0],values[1],values[2],values[3],values[4],values[5],values[6],values[7],values[8],values[9],values[10]])
+    cursor.commit()
+
+def readP():
+        with open("airs", "r") as f:
+
+            contents = f.read()
+
+            soup = bs(contents, 'lxml')
+            act = soup.find_all("div", class_="aircraft-teaser zoom list-item")
+            for i in act:
+                act1 = i.find("a")
+                yield act1["href"]
 
 
 if __name__ == '__main__':
-    print(average_airport_imprint(float(get_airport_distance('Bartell Strip','Stallions Airport'))))
-
+    for i in list(readP()):
+        add_airplane(i)
