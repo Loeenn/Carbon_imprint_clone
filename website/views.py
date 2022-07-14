@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, flash, jsonify
-from BACKEND import get_route_norm, oxygen_imprint, brutto, get_stations, truck_imprint
+from flask import Blueprint, render_template, request, flash
+from rail_imprint import get_route_norm, oxygen_imprint, brutto, get_stations, truck_imprint
 
 views = Blueprint('views', __name__)
 
@@ -32,6 +32,7 @@ def calculate(cargo_weight, cargo_volume, start_station, end_station, package_ty
 
 
 @views.route('/', methods=['GET', 'POST'])
+# @login_required
 def home():
     if request.method == 'POST':
         if request.form['submit_button'] == 'submit1':

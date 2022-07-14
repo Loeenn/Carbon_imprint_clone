@@ -1,27 +1,9 @@
-import math
-import pyodbc
 from xlrd import open_workbook
 import openrouteservice as ors
 from openrouteservice.directions import directions
-from openrouteservice.elevation import elevation_point
 from geopy import Nominatim
-import csv
-import geopy.distance
-from bs4 import BeautifulSoup as bs
-import requests
-import lxml
 from air_imprint import *
-
-
-def connect_db():
-    server = 'tcp:176.99.158.202'
-    database = 'Carbon_imprint'
-    username = 'guest'
-    password = 'asskarramba'
-    cnxn = pyodbc.connect(
-        f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}',
-        ansi=True)
-    return cnxn.cursor()
+from database import connect_db
 
 
 def brutto(m, volume):
