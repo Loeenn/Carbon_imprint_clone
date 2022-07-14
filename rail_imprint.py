@@ -1,7 +1,12 @@
+import math
 from xlrd import open_workbook
 import openrouteservice as ors
 from openrouteservice.directions import directions
+from openrouteservice.elevation import elevation_line
+from openrouteservice.convert import decode_polyline
 from geopy import Nominatim
+import csv
+import geopy.distance
 from air_imprint import *
 from database import connect_db
 
