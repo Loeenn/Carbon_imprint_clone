@@ -62,24 +62,11 @@ def get_airport_distance(departure_airport,arrival_airport):
 
     coordinates_arrival = (arrival_latitude,arrival_longitude)
 
-    return geopy.distance.geodesic(coordinates_departure, coordinates_arrival).km
+    elevation_1 = cursor.execute('''select elevation_ft from airports  where name = ?''',departure_airport).fetchone()[0]
+    elevation_2 = cursor.execute('''select elevation_ft from airports  where name = ?''',arrival_airport).fetchone()[0]
+    all_distance = get_all_distance(elevation_1,elevation_2,geopy.distance.geodesic(coordinates_departure, coordinates_arrival).km)
+    return all_distance
 
-
-def average_airport_imprint(distance):
-    return distance*0.621371*53*0.4535923
-
-
-def average_air_imprint_by_kg(mass,distance):#масса в тоннах,среднее перевозмиое число берем из расчета того что самый популярный самолет имеет груозоподъёмность 18 тонн
-    return (mass/18)*distance
-
-
-def get_air_imprint_by_model(model,distance,cargo_weight,cargo_volume):
-    cursor = connect_db()
-    cursor.execute('''select load_volume from airplanes where airplane_name = ?''',[model])
-    volume_airplane = int(cursor.fetchone()[0])
-    cursor.execute('''select load_weight from airplanes where airplane_name = ?''',[model])
-    weight_airplane =int(cursor.fetchone()[0])
-    return (cargo_weight/weight_airplane)*(cargo_volume/volume_airplane)*distance*0.621371*53*0.4535923
 
 
 def parse_airplane(url):
@@ -157,6 +144,27 @@ def readP():
                 act1 = i.find("a")
                 yield act1["href"]
 
+def get_all_distance(h1,h2,distance):
+    return (10000-h1)/0.2588+(distance-(10000-h1)/0.2588*0.9659-(10000-h2)/0.9986*0.0523)+(10000-h1)/0.9986
+
+
+
+
+def average_air_imprint(mass,value,distance):#масса в тоннах,среднее перевозмиое число берем из расчета того что самый популярный самолет имеет груозоподъёмность 18 тонн
+    return int(max((mass/18),(value/90))*distance)
+
+
+
+def get_air_imprint_by_model(model,distance,cargo_weight,cargo_volume):
+    cursor = connect_db()
+    cursor.execute('''select load_volume from airplanes where airplane_name = ?''',[model])
+    volume_airplane = int(cursor.fetchone()[0])
+    cursor.execute('''select load_weight from airplanes where airplane_name = ?''',[model])
+    weight_airplane =int(cursor.fetchone()[0])
+    return int(max((cargo_weight/weight_airplane),(cargo_volume/volume_airplane))*distance*0.621371*53*0.4535923)
+
+
 
 if __name__ == '__main__':
     print(get_air_imprint_by_model("KAMOV KA 32",get_airport_distance("Churchill Airport","Lake Monroe Seaplane Base"),10000,300),"кг CO2")
+    print(get_airport_distance("Churchill Airport","Lake Monroe Seaplane Base"))
