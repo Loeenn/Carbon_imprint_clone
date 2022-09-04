@@ -1,11 +1,12 @@
 import pyodbc
+import bcrypt
 
 
-#main part------------------------------------------------------------------------------------------
+# main part------------------------------------------------------------------------------------------
 def connect_db():
     server = 'tcp:176.99.158.202'
     database = 'Carbon_imprint'
-    username = 'guest'
+    username = 'guest_carbon'
     password = 'asskarramba'
     cnxn = pyodbc.connect(
         f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}',
@@ -19,6 +20,7 @@ def headers(table):
                 """)
     return [columnName[0] for columnName in cursor.description]
 
+
 def selectTop20(table):
     cursor = connect_db()
     cursor.execute(f""" SELECT TOP 20 *
@@ -28,23 +30,17 @@ def selectTop20(table):
     for i in cursor.fetchall():
         print([str(j) for j in i])
 
-#air-----------------------------------------------------------------------------------------------air
+
+# air-----------------------------------------------------------------------------------------------air
 
 
-
-#reil----------------------------------------------------------------------------------------------reil
-
-
-#auto-----------------------------------------------------------------------------------------------auto
+# reil----------------------------------------------------------------------------------------------reil
 
 
-
-#water-----------------------------------------------------------------------------------------------water
-
+# auto-----------------------------------------------------------------------------------------------auto
 
 
-
-
+# water-----------------------------------------------------------------------------------------------water
 
 
 # site ----------------------------------------------------------------------------------------------site
@@ -80,9 +76,20 @@ def checkEmail(email):
     return bool(cursor.fetchone())
 
 
+def get_hashed_password(plain_text_password):
+    # Hash a password for the first time
+    #   (Using bcrypt, the salt is saved into the hash itself)
+    return bcrypt.hashpw(plain_text_password.encode('utf8'), bcrypt.gensalt())
 
-def addUser(email, first_name, password_hash):
+
+def check_password(plain_text_password, hashed_password):
+    # Check hashed password. Using bcrypt, the salt is saved into the hash itself
+    return bcrypt.checkpw(plain_text_password.encode('utf8'), hashed_password.encode('utf8'))
+
+
+def addUser(email, first_name, password):
     cursor = connect_db()
+    password_hash = get_hashed_password(password)
     if checkEmail(email):
         return -1
     cursor.execute('''
@@ -93,7 +100,8 @@ def addUser(email, first_name, password_hash):
     cursor.commit()
     return 1
 
-def delitUser(email):
+
+def deleteUser(email):
     cursor = connect_db()
     cursor.execute('''
                     DELETE FROM Users 
@@ -113,8 +121,7 @@ def userId(email):
     return user_id
 
 
-
-def userHash(email):
+def get_user_hash(email):
     cursor = connect_db()
     cursor.execute('''
             SELECT password_hash
@@ -123,6 +130,7 @@ def userHash(email):
         ''', email)
     password_hash = cursor.fetchone()[0]
     return password_hash
+
 
 def getUserById(id):
     cursor = connect_db()
@@ -133,7 +141,6 @@ def getUserById(id):
         ''', id)
     data = dict(zip(headers("Users"), cursor.fetchone()))
     return data
-
 
 # dropUserTable()
 # createUserTable()

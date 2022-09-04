@@ -2,7 +2,7 @@ import csv
 import geopy.distance
 from bs4 import BeautifulSoup as bs
 import requests
-from database import connect_db
+from Backend.database import connect_db
 
 
 def put_csv():

@@ -7,8 +7,8 @@ from openrouteservice.convert import decode_polyline
 from geopy import Nominatim
 import csv
 import geopy.distance
-from air_imprint import *
-from database import connect_db
+from Backend.air_imprint import *
+from Backend.database import connect_db
 
 
 def brutto(m, volume):

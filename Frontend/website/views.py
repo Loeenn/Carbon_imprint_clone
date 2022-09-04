@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from rail_imprint import get_route_norm, oxygen_imprint, brutto, get_stations, truck_imprint
+from Backend.rail_imprint import get_route_norm, oxygen_imprint, brutto, get_stations, truck_imprint
 from flask_login import login_required, current_user
 
 
@@ -49,6 +49,6 @@ def home():
         bar_percent = 100 * max(result, truck_result) // min(result, truck_result)
         truck_result = round(truck_result)
         return render_template("home.html", result=result, bar_procent=bar_percent, truck_result=truck_result,
-                               stations=stations, typeCargo=typeCargo, typePackage=typePackage, max_kakay_to_huina=max(truck_result, result) )
+                               stations=stations, typeCargo=typeCargo, typePackage=typePackage, max_kakay_to_huina=max(truck_result, result))
     else:
-        return render_template("home.html", stations=stations, typeCargo=typeCargo, typePackage=typePackage)
+        return render_template("home.html", stations=stations, typeCargo=typeCargo, typePackage=typePackage, user=current_user)
