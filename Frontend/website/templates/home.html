@@ -36,7 +36,9 @@
             <br />
             <i class="far fa-phone-alt"></i>
             <a class="text-nowrap" href="tel:+74956331625">+7 495 633-16-25</a>
-            <button type="submit" class="btn btn-primary" name="submit_button" value="Logout">Logout</button>
+            <a href="/logout" class="btn btn-primary">
+                <span class="glyphicon glyphicon-log-out"></span> Log out
+            </a>
 
           </div>
           <div class="col-9">
@@ -58,7 +60,7 @@
                                       <p style="margin-bottom:5px">Откуда</p>
                                       <select class="form-control" name="routefrom">
                                             {% for case in stations%}
-                                                <option {{ 'selected' if case=="Ангасолка" else "" }}>{{case}}</option>
+                                                <option {{'selected' if case=="Ангасолка" else ""}}>{{case}}</option>
                                             {% endfor %}
                                       </select>
                                   </div>
@@ -147,32 +149,11 @@
       {%if result%}
 
               <div class="row center_class">
-                      <div class="col-sm">
-                            <h2 >Результаты</h2>
-                            <br/>
-                              <p font=30px>тонн углекислого газа</p>
-                              <h4>АВТО</h4>
-                              <h3 >{{truck_result}}</h3>
-                              <br/>
-                              <h4>Ж/Д</h4>
-                              <h3   name="output_1" id="output_1">{{result}}</h3>
+                      <div class="sketchy" style="align-content: center">
+                          <p style="font-size: large; font-family: 'Just Another Hand', cursive;">Перевозка произведёт {{truck_result}} тонн углекислого газа</p>
                       </div>
-                      <div class="col-9">
-                                      <table id="column-example-13" class="charts-css column show-labels show-primary-axis show-10-secondary-axes">
-                                            <caption>{{bar_procent}} % различие </caption>
-                                              <tbody>
-                                                  <tr>
-                                                      <th scope="row" > AVTO </th>
-                                                      <td style="--size:{{truck_result / max_kakay_to_huina}}; --color: black;"></td>
-                                                  </tr>
-                                                  <tr>
-                                                      <th scope="row"> RAILWAY </th>
-                                                      <td style="--size:{{result / max_kakay_to_huina}}; --color: green;"></td>
-                                                  </tr>
-                                              </tbody>
-                                        </table>
-                    </div>
               </div>
+
       {%endif%}
 </div>
 </body>

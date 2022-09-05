@@ -66,7 +66,7 @@ def get_route_norm(start_station: str, end_station: str, km_tons: float) -> list
         fuel[0] += norms[0]*((km_tons * norms[2])/10000)
         fuel[1] += norms[1]*((km_tons * norms[2])/10000)
         length += norms[2]
-    print(fuel)
+    print(fuel, length)
     return [fuel, length]
 
 
@@ -80,7 +80,7 @@ def truck_imprint(start_point, end_point, length, weight):
 
     routes = directions(client, ((start_location.longitude, start_location.latitude),
                                  (end_location.longitude, end_location.latitude)), profile='driving-car', elevation=True)
-    elevation_perc = routes['routes'][0]['summary']['ascent']/routes['routes'][0]['summary']['descent']*1000
+    elevation_perc = routes['routes'][0]['summary']['ascent']/routes['routes'][0]['summary']['descent']
 
     imprint = weight/20*40*elevation_perc*(length/100)/1000*2.172
     return imprint

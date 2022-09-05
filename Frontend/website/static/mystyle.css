@@ -1,46 +1,4 @@
-/* @property --p{
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 0;
-}
 
-
-.pie {
-  width:300px;
-  aspect-ratio:1;
-  position:relative;
-  display:inline-grid;
-  left: calc((100% - 300px) / 2);
-  margin:5px;
-  place-content:center;
-  font-size:25px;
-  font-weight:bold;
-  font-family:sans-serif;
-}
-
-
-.pie:before {
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  inset:0;
-  background:
-    radial-gradient(farthest-side,var(--c) 98%,#0000) top/16px 16px no-repeat,
-    conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
-  -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - 16px),#000 calc(100% - 16px));
-          mask:radial-gradient(farthest-side,#0000 calc(99% - 16px),#000 calc(100% - 16px));
-}
-
-.pie:after {
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  inset:calc(50% - 8px);
-  background:var(--c);
-  transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - 150px));
-}
-
-*/
 
 .center_class {
   display: flex;
@@ -54,6 +12,28 @@
   max-width: 300px;
   margin: 0 auto;
 }
-  /* body {
-    background: RGBA(0,0,0,0);
-} */
+
+.sketchy {
+    padding: 4rem 8rem;
+    display: inline-block;
+    border: 3px solid #333333;
+    font-size: 2.5rem;
+    border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+    text-transform: uppercase;
+    letter-spacing: 0.3ch;
+    background: #ffffff;
+    position: relative;
+}
+
+.sketchy::before {
+    content: '';
+    border: 2px solid #353535;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0) scale(1.015) rotate(0.5deg);
+    border-radius: 1% 1% 2% 4% / 2% 6% 5% 4%;
+}

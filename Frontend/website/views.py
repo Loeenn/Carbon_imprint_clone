@@ -20,19 +20,6 @@ def calculate(cargo_weight, cargo_volume, start_station, end_station, package_ty
     return [result, truck_result]
 
 
-    # if None in (cargo_weight, cargo_volume):
-    #     result = None
-    #     flash('No routefrom', category='error')
-    # else:
-    #     cargo_weight, cargo_volume = float(cargo_weight), float(cargo_volume)
-    #     fuel_summary, length_summary = get_route_norm(start_station, end_station, brutto(cargo_weight,
-    #                                                                                      cargo_volume))
-    #     result = oxygen_imprint(fuel_summary)
-    #     truck_result = truck_imprint(start_station, end_station, length_summary, cargo_weight)
-    #     flash('Done!', category='success')
-    #     return [result, truck_result]
-
-
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():
